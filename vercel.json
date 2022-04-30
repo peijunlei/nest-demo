@@ -1,16 +1,15 @@
 {
   "version": 2,
-  "name": "nest-demo",
   "builds": [
-      {
-          "src": "dist/main.js",
-          "use": "@vercel/node"
-      }
+    {
+      "src": "dist/main.js",
+      "use": "@vercel/node"
+    }
   ],
   "routes": [
-      {
-          "src": "/(.*)",
-          "dest": "dist/main.js"
-      }
+    {
+      "src": "/(.*)",
+      "dest": "dist/main.js"
+    }
   ]
 }
