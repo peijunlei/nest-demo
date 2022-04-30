@@ -12,6 +12,5 @@
           "src": "/(.*)",
           "dest": "dist/main.js"
       }
-  ],
-  "npmClient": "npm"
+  ]
 }
