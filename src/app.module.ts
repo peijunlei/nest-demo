@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CoffeeModule } from './coffee/coffee.module';
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -15,6 +16,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
         autoLoadEntities:true,
         synchronize:true,//生产禁用这个
     }),
+    AuthModule,
     CoffeeModule],
   controllers: [AppController],
   providers: [AppService],
