@@ -12,9 +12,13 @@ export class CoffeeController {
   findAll(@Query() paginationQuery: PaginationQueryDto) {
     return this.coffeeService.findAll(paginationQuery)
   }
-  @Get(":id")
+  @Post(":id")
   findOne(@Param("id") id: number) {
     return this.coffeeService.findOne(id)
+  }
+  @Get("/flavor")
+  findAllFlavors() {
+    return this.coffeeService.findAllFlavors()
   }
   @Post()
   @HttpCode(HttpStatus.GONE)
