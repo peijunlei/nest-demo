@@ -61,4 +61,9 @@ export class CoffeeService {
     return this.flavorRepository.create({ name })
   }
 
+  async findAllFlavors() {
+    const allFlavors = await this.flavorRepository.find()
+    return allFlavors
+  }
+
 }
