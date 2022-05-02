@@ -10,7 +10,10 @@ async function bootstrap() {
     whitelist:true,
     // 客户端传递的无用属性 会报错！
     // forbidNonWhitelisted:true
-    // transform:true
+    transform:true,
+    transformOptions:{
+      enableImplicitConversion:true
+    }
   }))
   await app.listen(3000);
 }
