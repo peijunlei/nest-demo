@@ -1,7 +1,16 @@
 # nest-demo
 
 记录学习nestjs
+## 权限相关
+邮箱唯一
+name:admin
+email:1594000695@qq.com
+password:123456
 
+1. coffee 只需要登陆
+2. 用户的 create update remove read 都需要 admin
+3. 用户的只能登陆
+4. todo 用户可以update 但是不能改角色 可以注册创建 不能选角色
 ## 安装docker
 ps(win10 需要专业版)
 1. [win官网下载](https://docs.docker.com/desktop/windows/install/)
