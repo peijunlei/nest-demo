@@ -8,7 +8,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-import { IUser } from './user-interface';
 
 @Injectable()
 export class UserService {
@@ -33,19 +32,19 @@ export class UserService {
 
   async login(loginUserDto: LoginUserDto) {
     const user = await this.findUserByEmail(loginUserDto.email)
-    console.log(user);
-
     if (user) {
       const isMatch = this.validatePassword(loginUserDto.password, user.password)
       if (isMatch) {
+        const {password,...returnUser}=user
         return {
-          token: this.authService.generateJwt(user)
+          token: this.authService.generateJwt(user),
+          user:returnUser
         }
       } else {
-        throw new HttpException('password is not matched', HttpStatus.BAD_REQUEST);
+        throw new HttpException('密码错误', HttpStatus.BAD_REQUEST);
       }
     } else {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('用户 NOT_FOUND', HttpStatus.NOT_FOUND);
     }
   }
 
@@ -63,7 +62,7 @@ export class UserService {
     }
     throw new HttpException('User not found', HttpStatus.NOT_FOUND);
   }
-
+  
   async update(id: number, updateUserDto: UpdateUserDto) {
     if (updateUserDto.email) {
       const _user = await this.findUserByEmail(updateUserDto.email)
@@ -83,15 +82,30 @@ export class UserService {
     return finaluser
   }
 
+
+  /**
+   * 
+   * @param email 用户邮箱
+   * @returns 
+   */
   private findUserByEmail(email: string) {
     email = email.toLowerCase();
     return this.userRepository.findOne({ email }, { select: ['id', "email", "password", "name", "role"] });
   }
-
-  private validatePassword(password: string, storedPasswordHash: string) {
+  /**
+  * 
+  * @param password 登陆的密码
+  * @param storedPasswordHash 数据库加密的密码
+  * @returns boolean
+  */
+  private validatePassword(password: string, storedPasswordHash: string): boolean {
     return this.authService.comparePasswords(password, storedPasswordHash);
   }
-
+  /**
+   * 
+   * @param email 用户邮箱
+   * @returns 
+   */
   private async isEmailExists(email: string) {
     email = email.toLowerCase();
     const [_, count] = await this.userRepository.findAndCount({ email })

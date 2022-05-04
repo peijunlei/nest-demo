@@ -8,15 +8,28 @@ import * as bcrypt from 'bcrypt';
 export class AuthService {
 
   constructor(private readonly jwtService: JwtService) { }
-
+  /**
+   * 
+   * @param user 
+   * @returns 
+   */
   generateJwt(user: IUser) {
-    return this.jwtService.sign({ user })
+    return this.jwtService.sign({user})
   }
-  /**加密 */
+  /**
+   * 
+   * @param password 
+   * @returns 
+   */
   hashPassword(password: string) {
     return bcrypt.hashSync(password, 12)
   }
-  /**比较 */
+  /**
+   * 
+   * @param password 
+   * @param storedPasswordHash 
+   * @returns 
+   */
   comparePasswords(password: string, storedPasswordHash: string) {
     return bcrypt.compareSync(password, storedPasswordHash)
   }

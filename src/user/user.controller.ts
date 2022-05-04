@@ -1,13 +1,13 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, UseGuards,Request } from '@nestjs/common';
 import { map } from 'rxjs/operators';
 import { RoleType } from 'src/common/constants/role-type';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
+import { LocalAuthGuard } from 'src/common/guards/local-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
-@UseGuards(JwtAuthGuard)
 @Controller('user')
 export class UserController {
 
@@ -17,7 +17,6 @@ export class UserController {
   create(@Body() createdUserDto: CreateUserDto) {
     return this.userService.create(createdUserDto);
   }
-
   @Post('login')
   login(@Body() loginUserDto: LoginUserDto) {
     return this.userService.login(loginUserDto)
@@ -33,7 +32,6 @@ export class UserController {
     return this.userService.remove(id)
   }
   
-  @Roles([RoleType.ADMIN])
   @Get()
   findAll() {
     return this.userService.findAll();
